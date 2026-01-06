@@ -1,0 +1,15 @@
+.env
+*.sqlite
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.streamlit/secrets.toml
+knowledge_sources.json
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

@@ -1,0 +1,10 @@
+streamlit>=1.36.0
+python-dotenv>=1.0.1
+sqlalchemy>=2.0.25
+memori>=3.1.2
+openai>=2.14.0
+firecrawl-py>=4.12.0
+pydantic>=2.7.0
+faster-whisper>=1.2.0
+
+

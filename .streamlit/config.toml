@@ -1,0 +1,7 @@
+[theme]
+base = "light"
+primaryColor = "rgb(13, 148, 136)"
+backgroundColor = "rgb(250, 250, 249)"
+secondaryBackgroundColor = "rgb(245, 245, 244)"
+textColor = "rgb(28, 25, 23)"
+font = "sans serif"
