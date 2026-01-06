@@ -2,7 +2,7 @@
 
 A Streamlit application that crawls documentation, stores it in a searchable knowledge base, and provides interactive support through text and voice interfaces.
 
-**[🚀 Try the Live Demo](https://krunalscustomersupportagent.streamlit.app/)**
+**[Try the Live Demo](https://krunalscustomersupportagent.streamlit.app/)**
 
 ## Screenshots
 
