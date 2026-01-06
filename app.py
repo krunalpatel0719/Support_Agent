@@ -115,6 +115,14 @@ def transcribe_audio(audio_bytes: bytes, model: WhisperModel) -> str:
         return ""
 
 
+def get_api_key(key_name: str) -> str:
+    """
+    Get API key from session state first, then fall back to environment variable.
+    This ensures user-entered keys are session-isolated and not shared across visitors.
+    """
+    return st.session_state.get(f"api_key_{key_name}", "") or os.getenv(key_name, "")
+
+
 def create_app_context() -> Optional[AppContext]:
     """
     Bootstrap the application services.
@@ -122,7 +130,7 @@ def create_app_context() -> Optional[AppContext]:
     Creates an SQLite-backed Memori instance and registers the OpenAI client
     so that all chat completions automatically become searchable memories.
     """
-    openai_key = os.getenv("OPENAI_API_KEY", "")
+    openai_key = get_api_key("OPENAI_API_KEY")
     if not openai_key:
         st.warning("OPENAI_API_KEY not set – add it in sidebar or .env file.")
         return None
@@ -213,7 +221,7 @@ def crawl_urls(urls: list[str], max_pages: int = 50) -> Iterator[dict]:
     Uses Firecrawl v2 API - see https://docs.firecrawl.dev
     Each yielded dict has: url, title, content
     """
-    firecrawl_key = os.getenv("FIRECRAWL_API_KEY", "")
+    firecrawl_key = get_api_key("FIRECRAWL_API_KEY")
     if not firecrawl_key:
         raise RuntimeError("FIRECRAWL_API_KEY not set – add it in sidebar or .env")
 
@@ -371,17 +379,17 @@ def main():
 
             openai_key = st.text_input(
                 "OpenAI API Key",
-                value=os.getenv("OPENAI_API_KEY", ""),
+                value=get_api_key("OPENAI_API_KEY"),
                 type="password",
             )
             firecrawl_key = st.text_input(
                 "Firecrawl API Key",
-                value=os.getenv("FIRECRAWL_API_KEY", ""),
+                value=get_api_key("FIRECRAWL_API_KEY"),
                 type="password",
             )
             memori_key = st.text_input(
                 "Memori API Key (optional)",
-                value=os.getenv("MEMORI_API_KEY", ""),
+                value=get_api_key("MEMORI_API_KEY"),
                 type="password",
                 help="For cloud features. Leave blank for local-only mode.",
             )
@@ -393,12 +401,13 @@ def main():
             st.session_state.company_name = company.strip()
 
             if st.button("Apply Settings", use_container_width=True):
+                # Store in session_state (isolated per user) instead of os.environ (shared)
                 if openai_key:
-                    os.environ["OPENAI_API_KEY"] = openai_key
+                    st.session_state.api_key_OPENAI_API_KEY = openai_key
                 if firecrawl_key:
-                    os.environ["FIRECRAWL_API_KEY"] = firecrawl_key
+                    st.session_state.api_key_FIRECRAWL_API_KEY = firecrawl_key
                 if memori_key:
-                    os.environ["MEMORI_API_KEY"] = memori_key
+                    st.session_state.api_key_MEMORI_API_KEY = memori_key
                 create_app_context()
                 st.success("Settings applied!")
 
