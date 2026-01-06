@@ -2,6 +2,25 @@
 
 A Streamlit application that crawls documentation, stores it in a searchable knowledge base, and provides interactive support through text and voice interfaces.
 
+**[🚀 Try the Live Demo](https://krunalscustomersupportagent.streamlit.app/)**
+
+## Screenshots
+
+**Full Application Overview**
+![Complete interface showing all features](screenshots/FullPageExample.png)
+
+**Settings & API Configuration**
+![Settings panel for API keys and configuration](screenshots/Settings.png)
+
+**Knowledge Sources**
+![Ingested documentation sources](screenshots/Knowledge.png)
+
+**Voice Input & Output**
+![Voice recording and playback features](screenshots/VoiceInputOutput.png)
+
+**Question Answering**
+![Chat interface with answered question](screenshots/AnswerQuestion.png)
+
 ## Features
 
 - Documentation crawling and ingestion from any URL
@@ -84,10 +103,30 @@ Support_Agent/
 ├── .gitignore              # Git ignore rules
 ├── .streamlit/
 │   └── config.toml          # UI theme configuration
+├── screenshots/             # Application screenshots
+│   ├── FullPageExample.png
+│   ├── Settings.png
+│   ├── Knowledge.png
+│   ├── VoiceInputOutput.png
+│   └── AnswerQuestion.png
 ├── README.md               # Documentation
 ├── support.sqlite          # Knowledge base (auto-created)
 └── knowledge_sources.json  # Source metadata (auto-created)
 ```
+
+## Deployment
+
+This app is deployed on [Streamlit Community Cloud](https://krunalscustomersupportagent.streamlit.app/).
+
+**Deploy your own instance:**
+
+1. Fork this repository
+2. Sign up at [share.streamlit.io](https://share.streamlit.io/)
+3. Connect your GitHub account
+4. Deploy from your forked repo
+5. **Important:** Don't add secrets in Streamlit Cloud settings - users will provide their own API keys via the sidebar
+
+The app automatically requires users to enter their own API keys, protecting your usage limits.
 
 ## Troubleshooting
 
