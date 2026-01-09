@@ -558,8 +558,8 @@ def main():
             with st.spinner("Searching knowledge base..."):
                 try:
                     snippets = []
-                    if hasattr(mem, "search"):
-                        snippets = mem.search(user_input, limit=5) or []
+                    if hasattr(mem, "recall"):
+                        snippets = mem.recall(user_input, limit=5) or []
 
                     context = "\n".join(f"- {s}" for s in snippets) if snippets else "(No relevant documentation found)"
                     company = st.session_state.company_name or "the documentation"
