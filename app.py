@@ -16,7 +16,7 @@ import os
 from dataclasses import dataclass, field
 from io import BytesIO
 from typing import Optional, Iterator, Any
-import torch
+import ctranslate2
 import streamlit as st
 from dotenv import load_dotenv
 from faster_whisper import WhisperModel
@@ -93,13 +93,16 @@ def load_whisper_model(model_size: str = "base") -> WhisperModel:
     avoiding expensive reloads on each transcription request.
     """
 
-    if torch.cuda.is_available():
+    # faster-whisper runs on CTranslate2, so ask it directly how many CUDA
+    # devices are visible instead of pulling in PyTorch just for this check.
+    cuda_devices = ctranslate2.get_cuda_device_count()
+
+    if cuda_devices > 0:
         device = "cuda"
         compute_type = "float16"
     else:
         device = "cpu"
         compute_type = "int8"
-
     return WhisperModel(model_size, device=device, compute_type=compute_type)
 
 
